@@ -1,5 +1,0 @@
-module ConstrainedRootSolvers
-
-
-
-end # module
