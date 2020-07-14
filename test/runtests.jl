@@ -1,55 +1,56 @@
 using BenchmarkTools
+using ConstrainedRootSolvers
 using Test
 
-using ConstrainedRootSolvers
 
 
 
-
+# A S-shape function, e.g. Weibull function
 function _r_func(x::FT) where {FT<:AbstractFloat}
     return exp( -1 * (x/2) ^ FT(0.8) ) - FT(0.5)
 end
 
+# A R-shape function
 function _s_func(x::FT) where {FT<:AbstractFloat}
     return exp( -1 * (x/2) ^ 5 ) - FT(0.5)
 end
 
+# segmented function with solution 1
+function _f0(x::FT) where {FT<:AbstractFloat}
+    return x>1 ? FT(1) : x
+end
 
+# segmented function with solution 1
+function _f1(x::FT) where {FT<:AbstractFloat}
+    return x>1 ? 2-x : x
+end
 
+# segmented function with solution of upper end
+function _f2(x::FT) where {FT<:AbstractFloat}
+    return x>1 ? (1+x)/2 : x
+end
 
-# Test the performance for R-shape function
-@testset "r-shape function" begin
-    for FT in [Float32, Float64]
-        for _method in [BisectionMethod{FT}(0,3),
-                        NewtonBisectionMethod{FT}(0,3,2.7),
-                        NewtonRaphsonMethod{FT}(2)]
-            for _tol in [ResidualTolerance{FT}(1e-3),
-                         SolutionTolerance{FT}(1e-3)]
-                _solut = find_zero(_r_func, _method, _tol);
-                #@btime find_zero(_r_func, $_method, $_tol);
-                @test !isnan(_solut);
-                @test typeof(_solut) == FT;
-            end
-        end
-    end
+# segmented function with solution 1
+function _f3(x::FT) where {FT<:AbstractFloat}
+    return x>1 ? 2-x : FT(0)
+end
+
+# segmented function with solution of lower bound
+function _f4(x::FT) where {FT<:AbstractFloat}
+    return x>1 ? 2-x : FT(1)
+end
+
+# segmented function with solution 1
+function _f5(x::FT) where {FT<:AbstractFloat}
+    return x>1 ? FT(0.5) : x
 end
 
 
 
 
-# Test the performance for S-shape function
-@testset "s-shape function" begin
-    for FT in [Float32, Float64]
-        for _method in [BisectionMethod{FT}(0,3),
-                        NewtonBisectionMethod{FT}(0,3,2.7),
-                        NewtonRaphsonMethod{FT}(2)]
-            for _tol in [ResidualTolerance{FT}(1e-3),
-                         SolutionTolerance{FT}(1e-3)]
-                _solut = find_zero(_s_func, _method, _tol);
-                #@btime find_zero(_s_func, $_method, $_tol);
-                @test !isnan(_solut);
-                @test typeof(_solut) == FT;
-            end
-        end
-    end
-end
+include("test_findzero_bisection.jl");
+include("test_findzero_newtonbisection.jl");
+include("test_findzero_newtonraphson.jl")
+include("test_findzero_reducestep.jl")
+include("test_findpeak_bisection.jl")
+include("test_findpeak_reducestep.jl")
