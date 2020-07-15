@@ -1,9 +1,9 @@
 # test find_zero function using Bisection method
-println("Testing find_zero with Bisection method...");
+println("\nTesting find_zero with Bisection method...");
 @testset "find_zero --- Bisection method" begin
     for FT in [Float32, Float64]
         ms = BisectionMethod{FT}(0,5);
-        rt = ResidualTolerance{FT}(FT[1e-3], 50);
+        rt = ResidualTolerance{FT}(1e-3, 50);
         st = SolutionTolerance{FT}(1e-3, 50);
 
         for tol in [rt, st]
@@ -14,10 +14,12 @@ println("Testing find_zero with Bisection method...");
             end
         end
 
-        @show FT;
-        @btime find_zero(_r_func, $ms, $rt);
-        @btime find_zero(_r_func, $ms, $st);
-        @btime find_zero(_s_func, $ms, $rt);
-        @btime find_zero(_s_func, $ms, $st);
+        if benchmarking
+            @show FT;
+            @btime find_zero(_r_func, $ms, $rt);
+            @btime find_zero(_r_func, $ms, $st);
+            @btime find_zero(_s_func, $ms, $rt);
+            @btime find_zero(_s_func, $ms, $st);
+        end
     end
 end

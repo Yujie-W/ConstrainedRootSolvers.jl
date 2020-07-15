@@ -3,15 +3,24 @@ module ConstrainedRootSolvers
 using DocStringExtensions
 using Parameters
 
+
+
+
+# export public Types
 export BisectionMethod,
-       NelderMeadmethod,
+       NelderMeadMethod,
        NewtonBisectionMethod,
        NewtonRaphsonMethod,
        ReduceStepMethod,
+       ReduceStepMethodND,
        ResidualTolerance,
        SolutionTolerance,
-       StepTolerance
+       SolutionToleranceND
 
+
+
+
+# export public functions
 export find_peak,
        find_zero
 
@@ -23,8 +32,10 @@ include("types/tolerance.jl")
 
 include("break/ifbreak.jl")
 
-include("findpeak/bisection.jl" )
-include("findpeak/reducestep.jl")
+include("findpeak/bisection.jl"   )
+include("findpeak/neldermead.jl"  )
+include("findpeak/reducestep.jl"  )
+include("findpeak/reducestepND.jl")
 
 include("findzero/bisection.jl"      )
 include("findzero/newtonbisection.jl")

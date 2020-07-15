@@ -23,7 +23,6 @@ Find the solution, given
 | [`NewtonRaphsonMethod`](@ref)   | [`SolutionTolerance`](@ref) | Yes       |
 | [`ReduceStepMethod`](@ref)      | [`ResidualTolerance`](@ref) | Yes       |
 | [`ReduceStepMethod`](@ref)      | [`SolutionTolerance`](@ref) | Yes       |
-| [`ReduceStepMethod`](@ref)      | [`StepTolerance`](@ref)     | Yes       |
 
 """
 function find_zero(

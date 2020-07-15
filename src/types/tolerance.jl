@@ -15,14 +15,14 @@ abstract type AbstractTolerance{FT} end
 
 
 """
-    struct ResidualTolerance
+    struct ResidualTolerance{FT}
 
 # Fields
 $(FIELDS)
 """
 struct ResidualTolerance{FT} <: AbstractTolerance{FT}
     "Tolerance for residual"
-    tol::Array{FT,1}
+    tol::FT
     "limit of iterations"
     n_limit::Int
 end
@@ -31,7 +31,7 @@ end
 
 
 """
-    struct SolutionTolerance
+    struct SolutionTolerance{FT}
 
 # Fields
 $(FIELDS)
@@ -47,12 +47,14 @@ end
 
 
 """
-    struct StepTolerance
+    struct SolutionToleranceND{FT}
 
 # Fields
 $(FIELDS)
 """
-struct StepTolerance{FT} <: AbstractTolerance{FT}
-    "Tolerance for step length"
+struct SolutionToleranceND{FT} <: AbstractTolerance{FT}
+    "Tolerance for solution"
     tol::Array{FT,1}
+    "limit of iterations"
+    n_limit::Int
 end

@@ -12,7 +12,7 @@ function find_zero(
     count::Int = 0
 
     # calculate the values for x_min and x_max first
-    x_dif = tol.tol[1];
+    x_dif = tol.tol;
 
     # find the solution
     x_lst = FT(Inf);
@@ -31,7 +31,7 @@ function find_zero(
         slope  = (y_dx - y_ntr) / (x_dx - x_ntr);
         x_lst  = x_ntr;
         x_ntr -= y_ntr / slope;
-        x_dif  = tol.tol[1] / abs(slope);
+        x_dif  = tol.tol / abs(slope);
 
         # count ++
         count += 1;

@@ -22,7 +22,7 @@ function if_break_uni(
             y::FT,
             n::Int
             ) where {FT<:AbstractFloat}
-    return (abs(x1-x2) < tol.tol[1]) || (n > tol.n_limit)
+    return (abs(x1-x2) < tol.tol) || (n > tol.n_limit)
 end
 
 
@@ -35,5 +35,5 @@ function if_break_uni(
             y::FT,
             n::Int
             ) where {FT<:AbstractFloat}
-    return (abs(y) < tol.tol[1]) || (n > tol.n_limit)
+    return (abs(y) < tol.tol) || (n > tol.n_limit)
 end

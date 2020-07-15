@@ -6,10 +6,11 @@
 """
 Hierachy of AbstractRootSolvingMethod:
 - BisectionMethod
-- NelderMeadmethod
+- NelderMeadMethod
 - NewtonBisectionMethod
 - NewtonRaphsonMethod
 - ReduceStepMethod
+- ReduceStepMethodND
 """
 abstract type AbstractRootSolvingMethod{FT} end
 
@@ -17,7 +18,7 @@ abstract type AbstractRootSolvingMethod{FT} end
 
 
 """
-    struct BisectionMethod
+    struct BisectionMethod{FT}
 
 # Fields
 $(FIELDS)
@@ -33,21 +34,25 @@ end
 
 
 """
-    struct NelderMeadmethod
+    struct NelderMeadMethod{FT}
 
 # Fields
 $(FIELDS)
 """
-struct NelderMeadmethod{FT} <: AbstractRootSolvingMethod{FT}
-    "Simplex matrix of (N+1) * (N+1)"
-    simplex::Array{Tuple,1}
+Base.@kwdef mutable struct NelderMeadMethod{FT} <: AbstractRootSolvingMethod{FT}
+    "Number of parameters to optimize"
+    N::Int = 2
+    "Initial values"
+    x_inis::Array{FT,1} = zeros(FT,N+1)
+    "Simplex array of array with dimension (N+1) * (N+1)"
+    simplex::Array{Array{FT,1},1} = [zeros(FT,N+1) for i in 1:(N+1)]
 end
 
 
 
 
 """
-    struct NewtonBisectionMethod
+    struct NewtonBisectionMethod{FT}
 
 # Fields
 $(FIELDS)
@@ -65,7 +70,7 @@ end
 
 
 """
-    struct NewtonRaphsonMethod
+    struct NewtonRaphsonMethod{FT}
 
 # Fields
 $(FIELDS)
@@ -79,12 +84,32 @@ end
 
 
 """
-    struct ReduceStepMethod
+    struct ReduceStepMethod{FT}
 
 # Fields
 $(FIELDS)
 """
 struct ReduceStepMethod{FT} <: AbstractRootSolvingMethod{FT}
+    "Lower bound"
+    x_min::FT
+    "Upper bound"
+    x_max::FT
+    "Initial guess"
+    x_ini::FT
+    "Initial step"
+    Δ_ini::FT
+end
+
+
+
+
+"""
+    struct ReduceStepMethodND{FT}
+
+# Fields
+$(FIELDS)
+"""
+struct ReduceStepMethodND{FT} <: AbstractRootSolvingMethod{FT}
     "Lower bound"
     x_mins::Array{FT,1}
     "Upper bound"

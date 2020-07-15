@@ -69,7 +69,6 @@ function next_xy!(
         end
 
         return true
-
     end
 end
 
@@ -88,17 +87,19 @@ Note that to compute the lowest value, use -f to make it a peak.
 
 ## Possible combinations
 
-| Method Type                | Tolerance type              | Pass Test |
-|:--------------------------:|:---------------------------:|:---------:|
-| [`BisectionMethod`](@ref)  | [`ResidualTolerance`](@ref) | 2 allocs  |
-| [`ReduceStepMethod`](@ref) | [`ResidualTolerance`](@ref) | Yes       |
-| [`ReduceStepMethod`](@ref) | [`StepTolerance`](@ref)     | Yes       |
+| Method Type                  | Tolerance type                | Pass Test  |
+|:----------------------------:|:-----------------------------:|:----------:|
+| [`BisectionMethod`](@ref)    | [`SolutionTolerance`](@ref)   | 2 allocs   |
+| [`NelderMeadMethod`](@ref)   | [`ResidualTolerance`](@ref)   | N+6 allocs |
+| [`NelderMeadMethod`](@ref)   | [`SolutionToleranceND`](@ref) | N+6 allocs |
+| [`ReduceStepMethod`](@ref)   | [`SolutionTolerance`](@ref)   | Yes        |
+| [`ReduceStepMethodND`](@ref) | [`SolutionToleranceND`](@ref) | 4 allocs   |
 
 """
 function find_peak(
             f::F,
             ms::BisectionMethod{FT},
-            tol::ResidualTolerance{FT}
+            tol::SolutionTolerance{FT}
 ) where {F<:Function, FT<:AbstractFloat}
     # count for iterations
     count::Int = 0

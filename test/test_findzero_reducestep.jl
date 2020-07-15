@@ -1,13 +1,12 @@
 # test find_zero function using ReduceStep method
-println("Testing find_zero with ReduceStep method...");
+println("\nTesting find_zero with ReduceStep method...");
 @testset "find_zero --- ReduceStep method" begin
     for FT in [Float32, Float64]
-        ms = ReduceStepMethod{FT}(FT[0],FT[5],FT[2],FT[1]);
-        rt = ResidualTolerance{FT}(FT[1e-3], 50);
+        ms = ReduceStepMethod{FT}(0, 5, 1+rand(FT), 1);
+        rt = ResidualTolerance{FT}(1e-3, 50);
         st = SolutionTolerance{FT}(1e-3, 50);
-        tt = StepTolerance{FT}(FT[1e-3]);
 
-        for tol in [rt, st, tt]
+        for tol in [rt, st]
             for f in [_r_func, _s_func]
                 sol = find_zero(f, ms, tol);
                 @test !isnan(sol);
@@ -15,12 +14,12 @@ println("Testing find_zero with ReduceStep method...");
             end
         end
 
-        @show FT;
-        @btime find_zero(_r_func, $ms, $rt);
-        @btime find_zero(_r_func, $ms, $st);
-        @btime find_zero(_r_func, $ms, $tt);
-        @btime find_zero(_s_func, $ms, $rt);
-        @btime find_zero(_s_func, $ms, $st);
-        @btime find_zero(_s_func, $ms, $tt);
+        if benchmarking
+            @show FT;
+            @btime find_zero(_r_func, $ms, $rt);
+            @btime find_zero(_r_func, $ms, $st);
+            @btime find_zero(_s_func, $ms, $rt);
+            @btime find_zero(_s_func, $ms, $st);
+        end
     end
 end

@@ -12,7 +12,7 @@ function find_zero(
     count::Int = 0
 
     # calculate the values for x_min and x_max first
-    x_dif = tol.tol[1];
+    x_dif = tol.tol ;
     x_min = ms.x_min;
     x_max = ms.x_max;
     y_min = f(x_min);

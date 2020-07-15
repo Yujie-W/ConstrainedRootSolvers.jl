@@ -45,12 +45,26 @@ function _f5(x::FT) where {FT<:AbstractFloat}
     return x>1 ? FT(0.5) : x
 end
 
+# surface function
+function _surf_func(x::Array{FT,1}) where {FT<:AbstractFloat}
+    return -(x[1]-2)^2 - (x[2]-3)^2
+end
 
 
 
-include("test_findzero_bisection.jl");
+
+# Benchmarked already
+benchmarking = false
+
+include("test_findzero_bisection.jl"      );
 include("test_findzero_newtonbisection.jl");
-include("test_findzero_newtonraphson.jl")
-include("test_findzero_reducestep.jl")
-include("test_findpeak_bisection.jl")
-include("test_findpeak_reducestep.jl")
+include("test_findzero_newtonraphson.jl"  );
+include("test_findzero_reducestep.jl"     );
+
+include("test_findpeak_bisection.jl"   );
+include("test_findpeak_neldermead.jl"  );
+include("test_findpeak_reducestep.jl"  );
+include("test_findpeak_reducestepND.jl");
+
+# To be benchmarked
+benchmarking = true
