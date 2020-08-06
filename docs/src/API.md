@@ -6,14 +6,18 @@ CurrentModule = ConstrainedRootSolvers
 ## Numerical methods
 ```@docs
 find_zero
+find_peak
 ```
 
 ## Method options
 ```@docs
 AbstractRootSolvingMethod
 BisectionMethod
+NelderMeadMethod
 NewtonBisectionMethod
 NewtonRaphsonMethod
+ReduceStepMethod
+ReduceStepMethodND
 ```
 
 ## Tolerance options
@@ -21,5 +25,7 @@ NewtonRaphsonMethod
 AbstractTolerance
 ResidualTolerance
 SolutionTolerance
-if_break
+SolutionToleranceND
+if_break_uni
+next_xy!
 ```
