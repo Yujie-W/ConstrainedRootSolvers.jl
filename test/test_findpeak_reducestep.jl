@@ -13,12 +13,5 @@ println("\nTesting find_peak with ReduceStep method...");
             @test typeof(sol) == FT;
             @test sol ≈ lr[i] atol=0.01;
         end
-
-        if benchmarking
-            @show FT;
-            for f in lf
-                @btime find_peak($f, $ms, $st);
-            end
-        end
     end
 end

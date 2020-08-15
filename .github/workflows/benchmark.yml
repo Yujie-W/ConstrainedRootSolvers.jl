@@ -1,13 +1,12 @@
-name: Documentation
+name: Benchmarks
 on:
   push:
     branches:
       - master
-    tags: '*'
   pull_request:
 
 jobs:
-  build:
+  benchmark:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -17,7 +16,5 @@ jobs:
           version: '1.5'
       - name: Install Dependencies
         run: julia --project=docs/ -e 'using Pkg; Pkg.instantiate();'
-      - name: Build and deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: julia --project=docs/ docs/make.jl
+      - name: Benchmark Package
+        run: julia --project -e 'using ConstrainedRootSolvers; benchmark_ConstrainedRootSolvers(Float32); benchmark_ConstrainedRootSolvers(Float64);'

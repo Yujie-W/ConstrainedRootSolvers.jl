@@ -10,9 +10,5 @@ println("\nTesting find_peak with ReduceStepND method...");
         @test eltype(sol) == FT;
         @test sol[1] ≈ 2 atol=0.01;
         @test sol[2] ≈ 3 atol=0.01;
-
-        if benchmarking
-            @btime find_peak($_surf_func, $ms, $st);
-        end
     end
 end

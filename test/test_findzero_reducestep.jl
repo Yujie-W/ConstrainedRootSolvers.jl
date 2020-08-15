@@ -13,13 +13,5 @@ println("\nTesting find_zero with ReduceStep method...");
                 @test typeof(sol) == FT;
             end
         end
-
-        if benchmarking
-            @show FT;
-            @btime find_zero(_r_func, $ms, $rt);
-            @btime find_zero(_r_func, $ms, $st);
-            @btime find_zero(_s_func, $ms, $rt);
-            @btime find_zero(_s_func, $ms, $st);
-        end
     end
 end

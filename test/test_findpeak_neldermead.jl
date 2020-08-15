@@ -13,10 +13,5 @@ println("\nTesting find_peak with NelderMeadMethod method...");
             @test result[1] ≈ 2 atol=0.01;
             @test result[2] ≈ 3 atol=0.01;
         end
-
-        if benchmarking
-            @btime find_peak($_surf_func, $ms, $rt);
-            @btime find_peak($_surf_func, $ms, $st);
-        end
     end
 end

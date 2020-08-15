@@ -53,9 +53,6 @@ end
 
 
 
-# Benchmarked already
-benchmarking = false
-
 include("test_findzero_bisection.jl"      );
 include("test_findzero_newtonbisection.jl");
 include("test_findzero_newtonraphson.jl"  );
@@ -65,6 +62,3 @@ include("test_findpeak_bisection.jl"   );
 include("test_findpeak_neldermead.jl"  );
 include("test_findpeak_reducestep.jl"  );
 include("test_findpeak_reducestepND.jl");
-
-# To be benchmarked
-benchmarking = true
