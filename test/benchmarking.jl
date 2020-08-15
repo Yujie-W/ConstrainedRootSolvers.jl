@@ -1,13 +1,6 @@
-###############################################################################
-#
-# Benchmark the Package
-#
-###############################################################################
-"""
+using BenchmarkTools
+using ConstrainedRootSolvers
 
-
-
-"""
 function benchmark_ConstrainedRootSolvers(FT)
     # A S-shape function, e.g. Weibull function
     @inline function _r_func(x::FT) where {FT<:AbstractFloat}
@@ -64,7 +57,7 @@ function benchmark_ConstrainedRootSolvers(FT)
     end
 
     println("\nBenchmarking find_peak with NelderMeadMethod method...");
-    ms = NelderMeadMethod{FT}(N=2, x_inis=FT[rand(FT)+1, rand(FT)+2, 0]);
+    ms = create_NelderMeadMethod(2, FT[rand(FT)+1, rand(FT)+2, 0]);
     rt = ResidualTolerance{FT}(1e-5, 50);
     st = SolutionToleranceND{FT}(FT[1e-3, 1e-3], 50);
     @btime find_peak($_surf_func, $ms, $rt);
@@ -122,3 +115,6 @@ function benchmark_ConstrainedRootSolvers(FT)
 
     return nothing
 end
+
+benchmark_ConstrainedRootSolvers(Float32);
+benchmark_ConstrainedRootSolvers(Float64);

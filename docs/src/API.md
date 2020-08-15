@@ -14,6 +14,7 @@ find_peak
 AbstractRootSolvingMethod
 BisectionMethod
 NelderMeadMethod
+create_NelderMeadMethod
 NewtonBisectionMethod
 NewtonRaphsonMethod
 ReduceStepMethod

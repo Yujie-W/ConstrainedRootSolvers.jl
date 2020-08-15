@@ -1,6 +1,5 @@
 module ConstrainedRootSolvers
 
-using BenchmarkTools
 using DocStringExtensions
 using Parameters
 
@@ -22,7 +21,7 @@ export BisectionMethod,
 
 
 # export public functions
-export benchmark_ConstrainedRootSolvers,
+export create_NelderMeadMethod,
        find_peak,
        find_zero
 
@@ -43,8 +42,6 @@ include("findzero/bisection.jl"      )
 include("findzero/newtonbisection.jl")
 include("findzero/newtonraphson.jl"  )
 include("findzero/reducestep.jl"     )
-
-include("benchmark/benchmark.jl")
 
 
 

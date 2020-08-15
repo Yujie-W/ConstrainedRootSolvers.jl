@@ -1,3 +1,28 @@
+"""
+    create_NelderMeadMethod(FT, N)
+
+Create a [`NelderMeadMethod`](@ref) type struct, given
+- `FT` Floating number type
+- `N` Number of variables to optimize
+"""
+function create_NelderMeadMethod(
+            N::Int,
+            x_inis::Array{FT,1}
+) where {FT<:AbstractFloat}
+    if length(x_inis) == N+1
+        _inis = x_inis;
+    else
+        _inis = rand(FT, N+1);
+    end
+
+    simplex::Array{Array{FT,1},1} = [zeros(FT,N+1) for i in 1:(N+1)];
+
+    return NelderMeadMethod{FT}(N, _inis, simplex)
+end
+
+
+
+
 function find_peak(
             f::F,
             ms::NelderMeadMethod{FT},
