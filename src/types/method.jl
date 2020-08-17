@@ -39,13 +39,13 @@ end
 # Fields
 $(FIELDS)
 """
-mutable struct NelderMeadMethod{FT} <: AbstractRootSolvingMethod{FT}
+Base.@kwdef mutable struct NelderMeadMethod{FT} <: AbstractRootSolvingMethod{FT}
     "Number of parameters to optimize"
-    N::Int
+    N::Int = 2
     "Initial values"
-    x_inis::Array{FT,1}
+    x_inis::Array{FT,1} = zeros(FT,N+1)
     "Simplex array of array with dimension (N+1) * (N+1)"
-    simplex::Array{Array{FT,1},1}
+    simplex::Array{Array{FT,1},1} = [zeros(FT,N+1) for i in 1:(N+1)]
 end
 
 

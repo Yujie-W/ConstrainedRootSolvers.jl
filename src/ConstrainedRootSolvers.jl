@@ -21,8 +21,7 @@ export BisectionMethod,
 
 
 # export public functions
-export create_NelderMeadMethod,
-       find_peak,
+export find_peak,
        find_zero
 
 
