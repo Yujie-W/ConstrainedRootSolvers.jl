@@ -11,8 +11,8 @@ Typical algorithms for root finding often do not work for plants because of the
 |:-----------------------------------------------:|:---------------------:|:---------------------:|
 | [![][dev-img]][dev-url] [![][rel-img]][rel-url] | [![][st-img]][st-url] | [![][bm-img]][bm-url] |
 
-[docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
-[docs-dev-url]: https://Yujie-W.github.io/ConstrainedRootSolvers.jl/dev/
+[dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
+[dev-url]: https://Yujie-W.github.io/ConstrainedRootSolvers.jl/dev/
 
 [docs-rel-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-rel-url]: https://Yujie-W.github.io/ConstrainedRootSolvers.jl/stable/
