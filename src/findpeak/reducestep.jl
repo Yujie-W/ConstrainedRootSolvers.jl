@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# Reduce step method to find peak
+# Reduce step method to find peak for uni-variable
 #
 ###############################################################################
 function find_peak(

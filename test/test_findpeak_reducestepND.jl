@@ -2,7 +2,10 @@
 println("\nTesting find_peak with ReduceStepND method...");
 @testset "find_peak --- ReduceStepND method" begin
     for FT in [Float32, Float64]
-        ms = ReduceStepMethodND{FT}(FT[0,0], FT[5,5], [1+rand(FT), 2+rand(FT)], FT[1,1]);
+        ms = ReduceStepMethodND{FT}(x_mins = FT[0,0],
+                                    x_maxs = FT[5,5],
+                                    x_inis = [1+rand(FT), 2+rand(FT)],
+                                    Δ_inis = FT[1,1]);
         st = SolutionToleranceND{FT}(FT[1e-3, 1e-3], 50);
 
         sol = find_peak(_surf_func, ms, st);

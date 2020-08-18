@@ -4,6 +4,8 @@
 #
 ###############################################################################
 """
+    abstract type AbstractTolerance{FT}
+
 Hierachy of AbstractTolerance:
 - ResidualTolerance
 - SolutionTolerance

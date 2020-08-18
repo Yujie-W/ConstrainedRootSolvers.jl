@@ -48,7 +48,7 @@ function benchmark_ConstrainedRootSolvers(FT)
     end
 
     println("\nBenchmarking find_peak with Bisection method...");
-    ms = BisectionMethod{FT}(0, 5);
+    ms = BisectionMethod{FT}(x_min=0, x_max=5);
     st = SolutionTolerance{FT}(1e-3, 50);
     lr = [1, 1, 5, 1, 0, 1]
     lf = [_f0, _f1, _f2, _f3, _f4, _f5]
@@ -73,12 +73,15 @@ function benchmark_ConstrainedRootSolvers(FT)
     end
 
     println("\nBenchmarking find_peak with ReduceStepMethodND method...");
-    ms = ReduceStepMethodND{FT}(FT[0,0], FT[5,5], [1+rand(FT), 2+rand(FT)], FT[1,1]);
+    ms = ReduceStepMethodND{FT}(x_mins = FT[0,0],
+                                x_maxs = FT[5,5],
+                                x_inis = [1+rand(FT), 2+rand(FT)],
+                                Δ_inis = FT[1,1]);
     st = SolutionToleranceND{FT}(FT[1e-3, 1e-3], 50);
     @btime find_peak($_surf_func, $ms, $st);
 
     println("\nBenchmarking find_zero with BisectionMethod method...");
-    ms = BisectionMethod{FT}(0,5);
+    ms = BisectionMethod{FT}(x_min=0, x_max=5);
     rt = ResidualTolerance{FT}(1e-3, 50);
     st = SolutionTolerance{FT}(1e-3, 50);
     @btime find_zero($_r_func, $ms, $rt);

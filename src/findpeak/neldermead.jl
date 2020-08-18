@@ -1,17 +1,22 @@
+###############################################################################
+#
+# Nelder-Mead method to find peak
+#
+###############################################################################
 function find_peak(
             f::F,
             ms::NelderMeadMethod{FT},
             tol::SolutionToleranceND{FT}
 ) where {F<:Function, FT<:AbstractFloat}
     # unpack values
-    @unpack x_inis = ms;
-    ncol = ms.N;
-    nrow = ms.N + 1;
+    @unpack cen_x, con_x, exp_x, ref_x, x_inis = ms;
+    nX = ms.N;
+    nS = ms.N + 1;
 
     # initialize the simplex
-    for irow in 1:nrow
+    for irow in 1:nS
         ms.simplex[irow] .= x_inis
-        if irow < nrow
+        if irow < nS
             ms.simplex[irow][irow] = x_inis[irow] / 2;
         end
         ms.simplex[irow][end] = f(ms.simplex[irow])
@@ -19,33 +24,29 @@ function find_peak(
 
     # find the optimal simplex
     count_all = 0;
-    cen_x::Array{FT,1} = x_inis[:];
-    ref_x::Array{FT,1} = x_inis[:];
-    exp_x::Array{FT,1} = x_inis[:];
-    con_x::Array{FT,1} = x_inis[:];
-    judges = [false for i in 1:ncol];
+    judges = [false for i in 1:nX];
     while true
         # 1. sort the simplex from high to low
         sort!(ms.simplex, by=x->x[end], rev=true);
-        for icol in 1:ncol
-            judges[icol] = ( abs(ms.simplex[1][icol] - ms.simplex[nrow][icol]) <= tol.tol[icol]);
+        for icol in 1:nX
+            judges[icol] = ( abs(ms.simplex[1][icol] - ms.simplex[nS][icol]) <= tol.tol[icol]);
         end
         all(judges) ? break : nothing;
 
         # 2. calculate the centroid of the N best
         cen_x .= FT(0)
-        for irow in 1:ncol
+        for irow in 1:nX
             cen_x .+= ms.simplex[irow]
         end
-        cen_x ./= ncol;
+        cen_x ./= nX;
 
         # 3. reflection of the worst
         ref_x  .= cen_x;
         ref_x .*= 2;
-        ref_x .-= ms.simplex[nrow];
+        ref_x .-= ms.simplex[nS];
         ref_y   = f(ref_x);
 
-        if ms.simplex[1][end] >= ref_y > ms.simplex[ncol][end]
+        if ms.simplex[1][end] >= ref_y > ms.simplex[nX][end]
             ms.simplex[end]     .= ref_x;
             ms.simplex[end][end] = ref_y;
 
@@ -67,17 +68,17 @@ function find_peak(
         # 5. contraction of the worst
         else
             con_x  .= cen_x;
-            con_x .+= ms.simplex[nrow];
+            con_x .+= ms.simplex[nS];
             con_x ./= 2;
             con_y   = f(con_x);
 
-            if con_y > ms.simplex[nrow][end]
+            if con_y > ms.simplex[nS][end]
                 ms.simplex[end]     .= con_x;
                 ms.simplex[end][end] = con_y;
 
             # 6. shrink
             else
-                for irow in 2:nrow
+                for irow in 2:nS
                     ms.simplex[irow]    .+= ms.simplex[1];
                     ms.simplex[irow][end] = f(ms.simplex[irow]);
                 end
@@ -91,7 +92,7 @@ function find_peak(
         count_all > tol.n_limit ? break : nothing;
     end
 
-    return ms.simplex[1][1:ncol]
+    return view(ms.simplex[1], 1:nX)
 end
 
 
@@ -103,14 +104,14 @@ function find_peak(
             tol::ResidualTolerance{FT}
 ) where {F<:Function, FT<:AbstractFloat}
     # unpack values
-    @unpack x_inis = ms;
-    ncol = ms.N;
-    nrow = ms.N + 1;
+    @unpack cen_x, con_x, exp_x, ref_x, x_inis = ms;
+    nX = ms.N;
+    nS = ms.N + 1;
 
     # initialize the simplex
-    for irow in 1:nrow
+    for irow in 1:nS
         ms.simplex[irow] .= x_inis
-        if irow < nrow
+        if irow < nS
             ms.simplex[irow][irow] = x_inis[irow] / 2;
         end
         ms.simplex[irow][end] = f(ms.simplex[irow])
@@ -118,10 +119,6 @@ function find_peak(
 
     # find the optimal simplex
     count_all = 0;
-    cen_x::Array{FT,1} = x_inis[:];
-    ref_x::Array{FT,1} = x_inis[:];
-    exp_x::Array{FT,1} = x_inis[:];
-    con_x::Array{FT,1} = x_inis[:];
     while true
         # 1. sort the simplex from high to low
         sort!(ms.simplex, by=x->x[end], rev=true);
@@ -131,18 +128,18 @@ function find_peak(
 
         # 2. calculate the centroid of the N best
         cen_x .= FT(0)
-        for irow in 1:ncol
+        for irow in 1:nX
             cen_x .+= ms.simplex[irow]
         end
-        cen_x ./= ncol;
+        cen_x ./= nX;
 
         # 3. reflection of the worst
         ref_x  .= cen_x;
         ref_x .*= 2;
-        ref_x .-= ms.simplex[nrow];
+        ref_x .-= ms.simplex[nS];
         ref_y   = f(ref_x);
 
-        if ms.simplex[1][end] >= ref_y > ms.simplex[ncol][end]
+        if ms.simplex[1][end] >= ref_y > ms.simplex[nX][end]
             ms.simplex[end]     .= ref_x;
             ms.simplex[end][end] = ref_y;
 
@@ -164,17 +161,17 @@ function find_peak(
         # 5. contraction of the worst
         else
             con_x  .= cen_x;
-            con_x .+= ms.simplex[nrow];
+            con_x .+= ms.simplex[nS];
             con_x ./= 2;
             con_y   = f(con_x);
 
-            if con_y > ms.simplex[nrow][end]
+            if con_y > ms.simplex[nS][end]
                 ms.simplex[end]     .= con_x;
                 ms.simplex[end][end] = con_y;
 
             # 6. shrink
             else
-                for irow in 2:nrow
+                for irow in 2:nS
                     ms.simplex[irow]    .+= ms.simplex[1];
                     ms.simplex[irow][end] = f(ms.simplex[irow]);
                 end
@@ -188,5 +185,5 @@ function find_peak(
         count_all > tol.n_limit ? break : nothing;
     end
 
-    return ms.simplex[1][1:ncol]
+    return view(ms.simplex[1], 1:nX)
 end

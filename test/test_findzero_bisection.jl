@@ -2,7 +2,7 @@
 println("\nTesting find_zero with Bisection method...");
 @testset "find_zero --- Bisection method" begin
     for FT in [Float32, Float64]
-        ms = BisectionMethod{FT}(0,5);
+        ms = BisectionMethod{FT}(x_min=0, x_max=5);
         rt = ResidualTolerance{FT}(1e-3, 50);
         st = SolutionTolerance{FT}(1e-3, 50);
 

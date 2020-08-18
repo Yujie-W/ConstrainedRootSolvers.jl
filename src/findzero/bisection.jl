@@ -4,11 +4,15 @@
 #
 ###############################################################################
 """
-    find_zero(f::F, ms::AbstractRootSolvingMethod{FT}, tol::AbstractTolerance{FT}) where {F<:Function, FT<:AbstractFloat}
+    find_zero(
+                f::F,
+                ms::AbstractCRSMethod{FT},
+                tol::AbstractTolerance{FT}
+    ) where {F<:Function, FT<:AbstractFloat}
 
 Find the solution, given
 - `f` Function to solve
-- `ms` [`AbstractRootSolvingMethod`](@ref) type method struct
+- `ms` [`AbstractCRSMethod`](@ref) type method struct
 - `tol` [`AbstractTolerance`](@ref) type tolerance struct
 
 ## Possible combinations

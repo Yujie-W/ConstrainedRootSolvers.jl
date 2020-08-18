@@ -1,7 +1,7 @@
 # test find_peak function using NelderMeadMethod method
 println("\nTesting find_peak with NelderMeadMethod method...");
 @testset "find_peak --- NelderMeadMethod method" begin
-    for FT in [Float32]#, Float64]
+    for FT in [Float32, Float64]
         ms = NelderMeadMethod{FT}(N=2, x_inis=FT[rand(FT)+1, rand(FT)+2, 0]);
         rt = ResidualTolerance{FT}(1e-5, 50);
         st = SolutionToleranceND{FT}(FT[1e-3, 1e-3], 50);

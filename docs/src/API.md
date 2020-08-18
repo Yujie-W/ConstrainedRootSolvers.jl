@@ -11,7 +11,7 @@ find_peak
 
 ## Method options
 ```@docs
-AbstractRootSolvingMethod
+AbstractCRSMethod
 BisectionMethod
 NelderMeadMethod
 NewtonBisectionMethod

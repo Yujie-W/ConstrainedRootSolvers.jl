@@ -4,7 +4,7 @@ Typical algorithms for root finding often do not work for plants because of the
     wierd shape of curves. In many cases, chosing a good initial guess works.
     But in many case, the initial guess may result in error. Here, customized
     root finding algorithms are presented with constaints. The package only
-    support the latest stable Julia version, you need to adapt the `julia = *`
+    supports the latest stable Julia version, you need to adapt the `julia = *`
     to make it work for other versions of Julia.
 
 | Documentation                                   | CI Status             | Benchmarks            |

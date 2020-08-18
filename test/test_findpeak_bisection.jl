@@ -2,7 +2,7 @@
 println("\nTesting find_peak with Bisection method...");
 @testset "find_peak --- Bisection method" begin
     for FT in [Float32, Float64]
-        ms = BisectionMethod{FT}(0, 5);
+        ms = BisectionMethod{FT}(x_min=0, x_max=5);
         st = SolutionTolerance{FT}(1e-3, 50);
         lr = [1, 1, 5, 1, 0, 1]
         lf = [_f0, _f1, _f2, _f3, _f4, _f5]

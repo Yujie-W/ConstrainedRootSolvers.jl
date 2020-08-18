@@ -76,7 +76,11 @@ end
 
 
 """
-    find_peak(f::F, ms::AbstractRootSolvingMethod{FT}, tol::AbstractTolerance{FT}) where {F<:Function, FT<:AbstractFloat}
+    find_peak(
+                f::F,
+                ms::AbstractCRSMethod{FT},
+                tol::AbstractTolerance{FT}
+    ) where {F<:Function, FT<:AbstractFloat}
 
 Find the solution, given
 - `f` A function to solve
@@ -105,7 +109,7 @@ function find_peak(
     count::Int = 0
 
     # create matrix to store data
-    xy      = ones(FT, (3,2));
+    @unpack xy = ms;
     xy[1,1] = ms.x_min;
     xy[2,1] = (ms.x_min + ms.x_max) / 2;
     xy[3,1] = ms.x_max;
@@ -125,7 +129,7 @@ function find_peak(
     end
 
     # get solution
-    _maxy,_indy = findmax(xy[:,2]);
+    _maxy,_indy = findmax( view(xy, :, 2) );
 
     return xy[_indy,1]
 end
