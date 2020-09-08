@@ -1,7 +1,7 @@
 name = "ConstrainedRootSolvers"
 uuid = "7e2492bd-0955-4089-8696-9df2af57a479"
 authors = ["Yujie Wang <jesiner@gmail.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
